@@ -1,0 +1,11 @@
+﻿Build started 07.07.2015 10:55:16.
+     1>Project "D:\Work\projects\cv_app\imgproc\imgproc.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Work\projects\cv_app\x64\Debug\imgproc.exe" /INCREMENTAL /NOLOGO /LIBPATH:D:\Work\projects\cv_app\imgproc\freeimage FreeImage.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Work\projects\cv_app\x64\Debug\imgproc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Work\projects\cv_app\x64\Debug\imgproc.lib" /MACHINE:X64 x64\Debug\Image.obj
+         x64\Debug\Source.obj
+         imgproc.vcxproj -> D:\Work\projects\cv_app\x64\Debug\imgproc.exe
+     1>Done Building Project "D:\Work\projects\cv_app\imgproc\imgproc.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.29

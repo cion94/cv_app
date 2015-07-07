@@ -1,0 +1,22 @@
+﻿Build started 24.06.2015 11:37:50.
+     1>Project "D:\Work\projects\imgproc\imgproc\imgproc.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Work\projects\imgproc\Debug\imgproc.exe" /INCREMENTAL /NOLOGO /LIBPATH:D:\Work\projects\imgproc\imgproc\freeimage FreeImage.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Work\projects\imgproc\Debug\imgproc.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Work\projects\imgproc\Debug\imgproc.lib" /MACHINE:X86 Debug\Source.obj
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_Unload@4 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_Load@12 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_Save@16 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_GetBits@4 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_GetPixelColor@16 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_SetPixelColor@16 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_GetWidth@4 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_GetHeight@4 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_GetRedMask@4 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_GetGreenMask@4 referenced in function _main
+     1>Source.obj : error LNK2019: unresolved external symbol __imp__FreeImage_GetBlueMask@4 referenced in function _main
+     1>MSVCRT.lib(crtexew.obj) : error LNK2019: unresolved external symbol _WinMain@16 referenced in function ___tmainCRTStartup
+     1>D:\Work\projects\imgproc\Debug\imgproc.exe : fatal error LNK1120: 12 unresolved externals
+     1>Done Building Project "D:\Work\projects\imgproc\imgproc\imgproc.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.12
