@@ -1,59 +1,58 @@
 #include "Image.h"
 
 
-void Conv( Mat *in, Mat* out, Mat* mask, int normFact )
+void ApplyKernel( Mat *in, Mat* out, Mat* kernel, int normFact )
 {
-	unsigned int i, j, k, l, kf, lf;
+	unsigned int i, j, k, l, kf, lf, component;
 	unsigned int ii, jj, maskCenterR, maskCenterC;
+	int outOffset, inOffset, kernelOffset;
+	int outV[4];
 
-	if( in == NULL || out == NULL || mask == NULL)
+	if( in == NULL || out == NULL || kernel == NULL)
 		return;
-	if( in->data == NULL || out->data == NULL || mask->data == NULL )
+	if( in->data == NULL || out->data == NULL || kernel->data == NULL )
 		return;
 
 	memset(out->data, 0, out->cols * out->rows * out->depth);
 
-	maskCenterR = mask->rows >> 1;
-	maskCenterC = mask->cols >> 1;
+	maskCenterR = kernel->rows >> 1;
+	maskCenterC = kernel->cols >> 1;
 
 	for( i = 0; i < out->rows; i++ )
 	{
 		for( j = 0; j < out->cols; j++ )
 		{
-			int outOffset = (i * out->cols + j) * out->depth;
-			int outV[4];
+			outOffset = (i * out->cols + j) * out->depth;
 			memset(&outV, 0, sizeof(int)*4);
 
-			for( k = 0; k < mask->rows; k++ )
+			for( k = 0; k < kernel->rows; k++ )
 			{
-				kf = mask->rows - 1 - k;
-				for( l = 0; l < mask->cols; l++ )
+				kf = kernel->rows - 1 - k;
+				for( l = 0; l < kernel->cols; l++ )
 				{
-					lf = mask->cols - 1 - l;
+					lf = kernel->cols - 1 - l;
 
 					ii = i + (k - maskCenterR);
 					jj = j + (l - maskCenterC);
 
 					if( ii >= 0 && ii < in->rows  && jj >= 0 && jj < in->cols)
 					{
-						//out->data[i][j] += in->data[ii][jj] *  mask->data[kf][lf];
-						int inOffset = (ii * in->cols + jj) * in->depth;
-						int maskOffset = (kf * mask->cols + lf);
+						inOffset = (ii * in->cols + jj) * in->depth;
+						kernelOffset = (kf * kernel->cols + lf);
 
-						for( int component = 0; component < out->depth; component++ )
+						for( component = 0; component < out->depth; component++ )
 						{
-							//out->data[outOffset + d] += in->data[inOffset + d] * (int)mask->data[maskOffset];
-							outV[component] += in->data[inOffset + component] * (int)(*((int*)mask->data + maskOffset));
+							outV[component] += in->data[inOffset + component] * (int)(*((int*)kernel->data + kernelOffset));
 						}
 					}
 				}
 			}
 			//normalize components
-			for( int component = 0; component < out->depth; component++ )
+			for( component = 0; component < out->depth; component++ )
 			{
 				outV[component] = ( outV[component] / normFact );
+				if(outV[component] < 0) outV[component] *= -1;
 				if(outV[component] > 255) outV[component] = 255;
-				if(outV[component] < 0) outV[component] = 0;
 				out->data[outOffset + component] = (unsigned char)outV[component];
 			}
 		}

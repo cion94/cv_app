@@ -13,7 +13,7 @@ struct Mat
 	int depth;
 };
 
-void Conv( Mat* in, Mat* out, Mat* mask, int normFact );
+void ApplyKernel( Mat* in, Mat* out, Mat* kernel, int normFact );
 void GetMatFromImage( Mat* src, FIBITMAP* hImg );
 
 #endif
