@@ -1,7 +1,6 @@
 #include "Image.h"
 
-
-void ApplyKernel( Mat *in, Mat* out, Mat* kernel, int normFact )
+void ApplyKernel( ImageMat *in, ImageMat* out, ImageMat* kernel, int normFact )
 {
 	unsigned int i, j, k, l, kf, lf, component;
 	unsigned int ii, jj, maskCenterR, maskCenterC;
@@ -13,7 +12,7 @@ void ApplyKernel( Mat *in, Mat* out, Mat* kernel, int normFact )
 	if( in->data == NULL || out->data == NULL || kernel->data == NULL )
 		return;
 
-	memset(out->data, 0, out->cols * out->rows * out->depth);
+	memset(out->data, 0, (out->cols * out->rows) * out->depth);
 
 	maskCenterR = kernel->rows >> 1;
 	maskCenterC = kernel->cols >> 1;
@@ -59,12 +58,31 @@ void ApplyKernel( Mat *in, Mat* out, Mat* kernel, int normFact )
 	}
 }
 
-void GetMatFromImage( Mat* src, FIBITMAP* hImg )
+void GetMatFromImage(ImageMat* outMat, FIBITMAP* hImg )
 {
-	src->rows = FreeImage_GetHeight(hImg);
-	src->cols = FreeImage_GetWidth(hImg);
+	ImageMat src;
+	src.rows = FreeImage_GetHeight(hImg);
+	src.cols = FreeImage_GetWidth(hImg);
 
-	src->data  = (BYTE*)FreeImage_GetBits(hImg);
-	src->depth = FreeImage_GetBPP(hImg);
-	src->depth = src->depth >> 3;
+	src.data  = (BYTE*)FreeImage_GetBits(hImg);
+	int depth = FreeImage_GetBPP(hImg);
+	depth = depth >> 3;
+
+	outMat->cols = src.rows;
+	outMat->rows = src.cols;
+
+	int size = (outMat->rows * outMat->cols);
+	outMat->data = (BYTE*)malloc( size << 2 );
+
+	int i, srcOffset, outOffset, k;
+	for( i = 0; i < size; i++ )
+	{
+		srcOffset = i * depth;
+		outOffset = i << 2;
+
+		for( k = 0; k < depth; k++ )
+		{
+			outMat->data[ outOffset + k ] = src.data[srcOffset + k];
+		}
+	}
 }

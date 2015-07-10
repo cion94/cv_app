@@ -6,14 +6,13 @@
 
 //24 bit and 32 bit only
 
-struct Mat
+struct ImageMat
 {
 	unsigned int rows, cols;
 	BYTE* data;
-	int depth;
 };
 
-void ApplyKernel( Mat* in, Mat* out, Mat* kernel, int normFact );
-void GetMatFromImage( Mat* src, FIBITMAP* hImg );
+void ApplyKernel( ImageMat* in, ImageMat* out, ImageMat* kernel, int normFact );
+void GetMatFromImage( ImageMat* src, FIBITMAP* hImg );
 
 #endif

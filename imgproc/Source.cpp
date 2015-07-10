@@ -3,7 +3,7 @@ using namespace std;
 
 int main()
 {
-	Mat in, Gx, Gy, kernel, out, inblur;
+	ImageMat in, Gx, Gy, kernel, out, inblur;
 
 	FIBITMAP* hImg = FreeImage_Load(FIF_PNG, "images/src2.png");
 	GetMatFromImage(&in, hImg);

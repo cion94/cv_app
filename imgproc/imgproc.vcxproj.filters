@@ -13,18 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Filters">
+      <UniqueIdentifier>{30c9d1e6-b478-4508-8ac6-c09f0e65dc37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Image">
+      <UniqueIdentifier>{665a7ea4-8c2b-4031-92a8-ba00700aecfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="edge_detector.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="edge_detector.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>Header Files</Filter>
+      <Filter>Image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
