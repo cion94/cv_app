@@ -1,5 +1,5 @@
-#ifndef EDGE_DETECTOR
-#define EDGE_DETECTOR
+#ifndef EDGE_DETECTOR_H
+#define EDGE_DETECTOR_H
 
 #include "Image.h"
 

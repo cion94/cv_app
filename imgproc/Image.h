@@ -4,8 +4,6 @@
 #include "freeimage/FreeImage.h"
 #include <iostream>
 
-//24 bit and 32 bit only
-
 struct ImageMat
 {
 	unsigned int rows, cols;
@@ -13,6 +11,8 @@ struct ImageMat
 };
 
 void ApplyKernel( ImageMat* in, ImageMat* out, ImageMat* kernel, int normFact );
-void GetMatFromImage( ImageMat* src, FIBITMAP* hImg );
+void LoadImageMat( const char* filename, ImageMat* imgMat );
+void SaveImageMat( const char* filename, ImageMat* imgMat );
+void FreeImageMat( ImageMat* img );
 
 #endif

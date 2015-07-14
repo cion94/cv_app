@@ -12,7 +12,7 @@ void ApplyKernel( ImageMat *in, ImageMat* out, ImageMat* kernel, int normFact )
 	if( in->data == NULL || out->data == NULL || kernel->data == NULL )
 		return;
 
-	memset(out->data, 0, (out->cols * out->rows) * out->depth);
+	memset( out->data, 0, (out->cols * out->rows) << 2 );
 
 	maskCenterR = kernel->rows >> 1;
 	maskCenterC = kernel->cols >> 1;
@@ -21,7 +21,7 @@ void ApplyKernel( ImageMat *in, ImageMat* out, ImageMat* kernel, int normFact )
 	{
 		for( j = 0; j < out->cols; j++ )
 		{
-			outOffset = (i * out->cols + j) * out->depth;
+			outOffset = (i * out->cols + j) << 2;
 			memset(&outV, 0, sizeof(int)*4);
 
 			for( k = 0; k < kernel->rows; k++ )
@@ -36,10 +36,10 @@ void ApplyKernel( ImageMat *in, ImageMat* out, ImageMat* kernel, int normFact )
 
 					if( ii >= 0 && ii < in->rows  && jj >= 0 && jj < in->cols)
 					{
-						inOffset = (ii * in->cols + jj) * in->depth;
+						inOffset = (ii * in->cols + jj) << 2;
 						kernelOffset = (kf * kernel->cols + lf);
 
-						for( component = 0; component < out->depth; component++ )
+						for( component = 0; component < 3; component++ )
 						{
 							outV[component] += in->data[inOffset + component] * (int)(*((int*)kernel->data + kernelOffset));
 						}
@@ -47,10 +47,10 @@ void ApplyKernel( ImageMat *in, ImageMat* out, ImageMat* kernel, int normFact )
 				}
 			}
 			//normalize components
-			for( component = 0; component < out->depth; component++ )
+			for( component = 0; component < 3; component++ )
 			{
 				outV[component] = ( outV[component] / normFact );
-				if(outV[component] < 0) outV[component] *= -1;
+				if(outV[component] < 0) outV[component] = 0;
 				if(outV[component] > 255) outV[component] = 255;
 				out->data[outOffset + component] = (unsigned char)outV[component];
 			}
@@ -58,8 +58,10 @@ void ApplyKernel( ImageMat *in, ImageMat* out, ImageMat* kernel, int normFact )
 	}
 }
 
-void GetMatFromImage(ImageMat* outMat, FIBITMAP* hImg )
+void LoadImageMat(const char* filename, ImageMat* outMat )
 {
+	FIBITMAP* hImg = FreeImage_Load( FIF_PNG, filename );
+
 	ImageMat src;
 	src.rows = FreeImage_GetHeight(hImg);
 	src.cols = FreeImage_GetWidth(hImg);
@@ -68,11 +70,12 @@ void GetMatFromImage(ImageMat* outMat, FIBITMAP* hImg )
 	int depth = FreeImage_GetBPP(hImg);
 	depth = depth >> 3;
 
-	outMat->cols = src.rows;
-	outMat->rows = src.cols;
+	outMat->cols = src.cols;
+	outMat->rows = src.rows;
 
 	int size = (outMat->rows * outMat->cols);
 	outMat->data = (BYTE*)malloc( size << 2 );
+	memset(outMat->data, 255, size << 2);
 
 	int i, srcOffset, outOffset, k;
 	for( i = 0; i < size; i++ )
@@ -85,4 +88,17 @@ void GetMatFromImage(ImageMat* outMat, FIBITMAP* hImg )
 			outMat->data[ outOffset + k ] = src.data[srcOffset + k];
 		}
 	}
+
+	FreeImage_Unload(hImg);
+}
+void SaveImageMat(const char* filename, ImageMat* imgMat )
+{
+	FIBITMAP* hImg = FreeImage_Allocate( imgMat->cols, imgMat->rows, 32 );
+	memcpy(FreeImage_GetBits(hImg), imgMat->data, imgMat->cols * imgMat->rows * 4);
+	FreeImage_Save( FIF_PNG, hImg, filename);
+	FreeImage_Unload(hImg);
+}
+void FreeImageMat( ImageMat* img )
+{
+	free(img->data);
 }

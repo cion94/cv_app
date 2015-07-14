@@ -30,6 +30,9 @@
     <ClCompile Include="Image.cpp">
       <Filter>Image</Filter>
     </ClCompile>
+    <ClCompile Include="smooth_image.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="edge_detector.h">
@@ -37,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="smooth_image.h">
+      <Filter>Filters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
