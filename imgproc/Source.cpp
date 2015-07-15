@@ -5,7 +5,7 @@ int main()
 {
 	ImageMat in, out;
 
-	LoadImageMat("images/src4.png", &in);
+	LoadImageMat("images/src2.png", &in);
 
 	DetectEdges(&in, &out);
 

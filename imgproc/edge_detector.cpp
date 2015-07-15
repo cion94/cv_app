@@ -1,6 +1,8 @@
 #include "edge_detector.h"
 #include <math.h>
 
+#define PI 3.14159265
+
 enum DIRECTION { HORIZONTAL, LEFT_DIAGONAL, VERTICAL, RIGHT_DIAGONAL, VISITED };
 
 void DetectEdges( ImageMat* inImg, ImageMat* outImg )
@@ -154,12 +156,17 @@ void DetectEdges( ImageMat* inImg, ImageMat* outImg )
 			outImg->data[outOffset + 3] = 255;
 
 			dirOffset = (i * inImg->cols + j);
-			double theta =  atan2((Gx[0] + Gx[1] + Gx[2]), (Gy[0] + Gy[1] + Gy[2]));
-			if( theta < 0)
-			{
-				theta = 180.0f - theta;
-			}
+			double theta =  atan2((Gy[0] + Gy[1] + Gy[2]), (Gx[0] + Gx[1] + Gx[2]));
+
+			theta = theta * 180.0f / PI;
+			
+			char direction[100];
 			int dir = VISITED;
+
+			if( theta < 0.0f )
+			{
+				theta  = 180.0f + theta;
+			}
 
 			if( (theta >= 0 && theta <= 22.5f) || (theta > 157.5f && theta <= 180.0f) )
 			{
